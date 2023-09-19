@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBlock from "./SideBlock/sideBlock";
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Divider, List, Skeleton } from "@mui/material";
-import { useSelector } from "react-redux";
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Divider, List, Skeleton, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchComments } from "../redux/slices/comment";
 
 
+export const CommentsBlock = ({  user, children, isLoading = true }) => {
+const { id } = useParams();
+const dispatch = useDispatch();
+const {items } = useSelector(state => state.comments);
 
+ useEffect(() => {
+    dispatch(fetchComments(id));
+  }, [dispatch, id]);
 
-export const CommentsBlock = ({ items, user, children, isLoading = true }) => {
-
-  const comments = useSelector(state => state.comments.items);
-
-  console.log("Comments:", comments);
-  console.log('User:', user);
 
   return (
     <SideBlock title="Comments">
@@ -26,17 +29,28 @@ export const CommentsBlock = ({ items, user, children, isLoading = true }) => {
                   <Avatar alt={user.fullName} src={user.avatarUrl} />
                 )}
               </ListItemAvatar>
-              {isLoading ? (
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Skeleton variant="text" height={25} width={120} />
-                  <Skeleton variant="text" height={18} width={230} />
-                </div>
-              ) : (
+              <div>
                 <ListItemText
                   primary={user.fullName}
-                  secondary={comment}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        
+                        variant="caption"
+                        color="#9e9e9e"
+                      >
+                        {new Date(comment.createdAt).toLocaleDateString()} {/* Display date */}
+                      </Typography>
+                      <br />
+                      {isLoading ? (
+                        <Skeleton variant="text" height={18} width={230} />
+                      ) : (
+                        comment.text 
+                      )}
+                    </React.Fragment>
+                  }
                 />
-              )}
+              </div>
             </ListItem>
             <Divider variant="inset" component="li" />
           </React.Fragment>

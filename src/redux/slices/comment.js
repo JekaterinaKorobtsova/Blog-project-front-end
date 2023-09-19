@@ -32,7 +32,7 @@ const commentsSlice = createSlice({
       state.status = "loading";
     },
     [fetchComments.fulfilled]: (state, action) => {
-      state.items = action.payload;
+      state.items = action.payload.comments;
       state.status = "loaded";
     },
     [fetchComments.rejected]: (state) => {

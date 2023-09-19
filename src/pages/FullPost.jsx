@@ -29,10 +29,6 @@ const FullPost = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    dispatch(fetchComments(id));
-  }, [dispatch, id]);
-
   const handleCommentAdded = () => {
     dispatch(fetchComments(id));
   };
@@ -44,8 +40,6 @@ const FullPost = () => {
 
   const postText = data.text;
 
-
-  console.log("Comments in FullPost:", data.comments);
   return (
     <>
       <Post
