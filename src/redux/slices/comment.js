@@ -19,10 +19,17 @@ const commentsSlice = createSlice({
   initialState,
   reducers: {
     addNewComment: (state, action) => {
+      console.log("addNewComment action:", action);
       state.items.push(action.payload);
+      if (action.payload.post) {
+        const postId = action.payload.post;
+        const post = state.items.find((item) => item._id === postId);
+        if (post) {
+          post.commentsCount += 1; 
+        }
+      }
     },
       setCommentText: (state, action) => {
-        console.log('Setting comment text:', action.payload);
         state.text = action.payload;
       },
   },

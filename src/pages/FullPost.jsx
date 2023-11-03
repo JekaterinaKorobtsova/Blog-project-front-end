@@ -5,20 +5,17 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
 import ReactMarkdown from "react-markdown";
-import { useDispatch } from "react-redux";
-import { fetchComments } from "../redux/slices/comment";
+
 
 const FullPost = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
-  const dispatch = useDispatch();
-  
-  
+
 
   useEffect(() => {
     axios
-      .get(`/posts/${id}`)
+    .get(`/posts/${id}?incrementView=false`)
       .then((res) => {
         setData(res.data);
         setIsLoading(false);
@@ -29,9 +26,17 @@ const FullPost = () => {
       });
   }, [id]);
 
-  const handleCommentAdded = () => {
-    dispatch(fetchComments(id));
+  const handleCommentAdded = async () => {
+    try {
+      const response = await axios.get(`/posts/${id}?incrementView=false`);
+      setData(response.data);
+    } catch (error) {
+      console.warn(error);
+      alert("Issue with getting the post");
+    }
   };
+
+  
   
 
   if (isLoading) {

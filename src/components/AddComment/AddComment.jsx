@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from "./AddComment.module.scss";
 import {TextField, Avatar, Button} from '@mui/material';
 import { Navigate, useParams } from 'react-router-dom';

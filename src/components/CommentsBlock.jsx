@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchComments } from "../redux/slices/comment";
 
 
+
 export const CommentsBlock = ({  user, children, isLoading = true }) => {
 const { id } = useParams();
 const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const {items } = useSelector(state => state.comments);
                         variant="caption"
                         color="#9e9e9e"
                       >
-                        {new Date(comment.createdAt).toLocaleDateString()} {/* Display date */}
+                        {new Date(comment.createdAt).toLocaleDateString()}
                       </Typography>
                       <br />
                       {isLoading ? (

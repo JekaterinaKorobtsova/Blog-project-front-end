@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Tabs, Tab, Grid } from "@mui/material";
 import Post from "../components/Post/post";
 import { TagsBlock } from "../components/TagsBlock";
-import { CommentsBlock } from "../components/CommentsBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSorting, fetchPopularTags, fetchPosts, fetchTags } from "../redux/slices/posts";
 
@@ -11,7 +10,7 @@ const Home = () => {
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.data);
   const sorting = useSelector((state) => state.posts.sorting);
-  const comments = useSelector((state) => state.comments);
+
 
   const isPostLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
@@ -62,10 +61,6 @@ const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={tags.status === "loading"} />
-          {/* <CommentsBlock
-            items={comments} user={userData.user} 
-            isLoading={false}
-          /> */}
         </Grid>
       </Grid>
     </>
